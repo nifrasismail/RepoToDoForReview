@@ -1,0 +1,48 @@
+<mat-card class="card">
+  <mat-card-title>
+    <h1>ToDO Application</h1>
+    <h4>Manage your work on schedule</h4>
+  </mat-card-title>
+
+  <mat-card-content >
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="ToDO Note" [(ngModel)]="model.description" (ngModelChange)="valuechange($event)">
+
+    </mat-form-field>
+    <p class="mat-error" *ngIf="showErrorMessage" >Can't be Empty</p>
+    <button mat-raised-button color="accent" (click)="createTodo(model)">SAVE</button>
+
+  </mat-card-content>
+
+  <mat-card-content *ngIf="allTodo.length > 0">
+    <mat-list>
+      <h3 mat-subheader>PENDING ToDo</h3>
+      <div *ngFor="let todo of allTodo">
+      <mat-list-item *ngIf="todo.status == 'PENDING'"  >
+        <h3 matLine> {{todo.description}} </h3>
+        <p matLine>
+          <span>Created Date: {{todo.createdDate | date}} </span>
+          <br/>
+        </p>
+        <button mat-raised-button color="primary" (click)="updateStatus(todo)"><mat-icon>done</mat-icon></button>
+        &nbsp;
+        <button mat-raised-button color="accent" (click)="delete(todo)"><mat-icon>close</mat-icon></button>
+      </mat-list-item>
+      </div>
+    </mat-list>
+    <mat-divider></mat-divider>
+    <mat-list #todos>
+      <h3 mat-subheader>COMPLETED ToDo</h3>
+      <div *ngFor="let todo of allTodo">
+        <mat-list-item *ngIf="todo.status == 'COMPLETED'"  >
+          <h3 matLine class="completed"> {{todo.description}} </h3>
+          <p matLine>
+            <span class="completed">Created Date: {{todo.createdDate | date}} </span>
+            <br/>
+          </p>
+        </mat-list-item>
+      </div>
+
+    </mat-list>
+  </mat-card-content>
+</mat-card>
